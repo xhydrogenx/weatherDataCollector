@@ -18,23 +18,29 @@ def get_weather_data(city):
         response.raise_for_status()
         # запись в переменную
         weatherdata = response.json()
-        # пустой списко для измененных данных
+        # пустой списоr для измененных данных
         newweatherdata = []
 
         # проходимся по forecastday и в каждом обьекте выбираем только город, день и среднесуточную температуру
         for forecastday in weatherdata["forecast"]["forecastday"]:
             # создание нового словаря в цикле
             simple_data = {
-                "city": weatherdata["location"]["name"],
                 "day": forecastday["date"],
                 "avg_temp_c": forecastday["day"]["avgtemp_c"]
             }
             # записываю в пустой список словарь из simple_data для каждого объекта в forecastday
             newweatherdata.append(simple_data)
+        # колхозим новый объект
+        finalweather = {
+            "location": {
+                "city": weatherdata["location"]["name"]
+            },
+            "weather": newweatherdata
+        }
 
         # создаю json
-        with open('newweatherdata.json', 'w') as json_file:
-            json.dump(newweatherdata, json_file)
+        with open('finalweather.json', 'w') as json_file:
+            json.dump(finalweather, json_file, indent="  ", separators=(',', ':'))
 
 
 
