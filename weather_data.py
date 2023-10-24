@@ -23,12 +23,13 @@ def get_weather_data(city):
 
         # проходимся по forecastday и в каждом обьекте выбираем только город, день и среднесуточную температуру
         for forecastday in weatherdata["forecast"]["forecastday"]:
+            # создание нового словаря в цикле
             simple_data = {
                 "city": weatherdata["location"]["name"],
                 "day": forecastday["date"],
                 "avg_temp_c": forecastday["day"]["avgtemp_c"]
             }
-            # записываю в пустой список то что вышло из simple_data
+            # записываю в пустой список словарь из simple_data для каждого объекта в forecastday
             newweatherdata.append(simple_data)
 
         # создаю json
